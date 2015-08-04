@@ -40,17 +40,21 @@ if($_POST)
 	*/
 	
 	//posts statuses message on group wall
-	$photo = "logo.png";
+	$photo = "C:/wamp/www/group-poster/logo.png";
 
 	$msg_body = array(
-		'source' => class_exists('CurlFile', false) ? new CURLFile($photo, 'image/png') : "@{$photo}"
+		//'source' => class_exists('CurlFile', false) ? new CURLFile($photo, 'image/png') : "@{$photo}",
 		'message' => $userMessage,
 	);
 
 	if ($fbuser) {
 		foreach ($userGroups as $userGroupId) {
 			//HTTP POST request to GROUP_ID/feed with the publish_stream
-			$post_url = '/'.$userGroupId.'/feed';
+			if(isset($msg_body['source'])) {
+				$post_url = '/'.$userGroupId.'/photos';
+			} else{
+				$post_url = '/'.$userGroupId.'/feed';
+			}
 			try {
 				$postResult[] = $facebook->api($post_url, 'post', $msg_body );
 			} catch (FacebookApiException $e) {
