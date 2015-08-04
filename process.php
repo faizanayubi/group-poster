@@ -38,10 +38,12 @@ if($_POST)
 		'scheduled_publish_time' => '1333699439' //Or time when post should be published
 	);
 	*/
-
+	
 	//posts statuses message on group wall
+	$photo = "logo.png";
+
 	$msg_body = array(
-		'link' => 'https://www.facebook.com/swiftintern',
+		'source' => class_exists('CurlFile', false) ? new CURLFile($photo, 'image/png') : "@{$photo}"
 		'message' => $userMessage,
 	);
 
